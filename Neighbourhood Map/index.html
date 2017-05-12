@@ -1,0 +1,122 @@
+<!Doctype >
+<html>
+<head>
+  <title>Gujarat Tourism </title>
+  <script src="js\jquery.min.js"></script>
+  <script src="js\knockout.js"></script>
+  <script src="bootstrap/js/bootstrap.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+</head>
+<body style="background-color:66cdaa">
+  <div class="container-fluid">
+    <div class="row" style="padding:15px">
+      <div class="col-md-12 top">
+        <h1 class="text">Gujarat Tourism</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" >
+          <div class="form-group">
+            <input type="text" class="form-control" data-bind="value:search,valueUpdate:'afterkeydown', event: {keyup: filterText}" placeholder="Search">
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10" id="map"></div>
+      <div class="col-md-2">
+      <ul class="nav navbar-nav" data-bind="foreach:markers">
+          <li data-bind="visible:show, event:{click:$parent.Bounce},text:title" class="list"></li>
+        </ul>
+      </div>
+    </div>
+</div>
+  <script>
+  var map,infowindow;
+  function initMap() {
+    var styles = [
+      {
+        featureType: 'water',
+        stylers: [
+          { color: '#19a0d8' }
+        ]
+      },{
+        featureType: 'administrative',
+        elementType: 'labels.text.stroke',
+        stylers: [
+          { color: '#ffffff' },
+          { weight: 6 }
+        ]
+      },{
+        featureType: 'administrative',
+        elementType: 'labels.text.fill',
+        stylers: [
+          { color: '#e85113' }
+        ]
+      },{
+        featureType: 'road.highway',
+        elementType: 'geometry.stroke',
+        stylers: [
+          { color: '#efe9e4' },
+          { lightness: -40 }
+        ]
+      },{
+        featureType: 'transit.station',
+        stylers: [
+          { weight: 9 },
+          { hue: '#e85113' }
+        ]
+      },{
+        featureType: 'road.highway',
+        elementType: 'labels.icon',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },{
+        featureType: 'water',
+        elementType: 'labels.text.stroke',
+        stylers: [
+          { lightness: 100 }
+        ]
+      },{
+        featureType: 'water',
+        elementType: 'labels.text.fill',
+        stylers: [
+          { lightness: -100 }
+        ]
+      },{
+        featureType: 'poi',
+        elementType: 'geometry',
+        stylers: [
+          { visibility: 'on' },
+          { color: '#f0e4d3' }
+        ]
+      },{
+        featureType: 'road.highway',
+        elementType: 'geometry.fill',
+        stylers: [
+          { color: '#efe9e4' },
+          { lightness: -25 }
+        ]
+      }
+    ];
+
+      map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 22.2587,lng: 71.1924},
+              zoom: 5,
+              styles: styles,
+              mapTypeControl: false
+          });
+          ko.applyBindings(new ViewModel());
+  }
+  function error(){
+    document.getElementById('map').innerHTML="Error in the map";
+  }
+  </script>
+  <script src="js\app.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-f03qtgh9yrECnFfDPbMG5lUlDYasdB0&libraries=geometry,drawing&v=3&callback=initMap" onerror="error()">
+</script>
+</body>
+</html>
